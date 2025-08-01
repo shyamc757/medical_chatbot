@@ -1,0 +1,27 @@
+# PDF parsing
+pdfplumber
+PyPDF2
+
+# OCR (for scanned PDFs or images)
+pytesseract
+pdf2image
+pillow
+poppler-utils
+tqdm
+
+# Vector DB + RAG stack
+qdrant-client
+langchain
+langchain-qdrant
+langchain-community
+langchain-openai
+langchain-core
+
+# Embedding and LLMs
+openai
+
+# Env loading
+python-dotenv
+
+# UI
+streamlit
