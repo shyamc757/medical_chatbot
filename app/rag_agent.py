@@ -10,6 +10,7 @@ from operator import itemgetter
 from langchain_qdrant import QdrantVectorStore
 from langchain_openai.embeddings import OpenAIEmbeddings
 from qdrant_client import QdrantClient
+import init_qdrant
 
 from config import QDRANT_COLLECTION_NAME, QDRANT_URL
 from dotenv import load_dotenv
@@ -30,9 +31,15 @@ retriever = vectorstore.as_retriever(
     content_payload_key="text"
 )
 
-SYSTEM_PROMPT = """You are a helpful and precise medical assistant.
-Answer the question using only the information from the provided context.
-If the answer is not found in the context, say "I could not find that in the reports."
+SYSTEM_PROMPT = """You are a medically trained assistant analyzing clinical reports.
+
+Answer questions using only the information from the uploaded medical documents. Be thorough, precise, and cautious — clearly state if additional consultation is needed.
+
+If a direct answer is not available in the context, infer carefully and explain your reasoning. If it's completely absent, respond with: \"I could not find that in the reports.\"
+
+For questions related to patient health, diagnosis, risk factors, or preventive suggestions — use your knowledge only in the context of the reports provided.
+
+If a question is unrelated to the uploaded medical reports, say: \"I cannot answer that.\"
 
 {context}
 """
@@ -58,7 +65,6 @@ rag_chain: Runnable = (
     | llm
     | output_parser
 )
-
 
 def get_answer(question: str) -> str:
     """Public interface to ask a question using the RAG agent."""
