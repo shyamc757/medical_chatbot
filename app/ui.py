@@ -1,4 +1,3 @@
-# ✅ Final Streamlit UI with Sidebar Upload, Memory Chat, and Click-to-Reveal Sources
 import os
 import streamlit as st
 from tempfile import TemporaryDirectory
